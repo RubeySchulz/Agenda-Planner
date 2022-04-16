@@ -1,6 +1,6 @@
 console.log("cum");
 
-var createTimeBlock = function(time){
+var createTimeBlock = function(time, textAreaTime){
     var timeBlockEl = $("<div>").addClass("time-block");
     var row = $("<div>").addClass("row");
     timeBlockEl.append(row);
@@ -9,7 +9,7 @@ var createTimeBlock = function(time){
     var time = $("<p>").text(time);
     timeSpace.append(time);
 
-    var textSpace = $("<div>").addClass("col-10 past");
+    var textSpace = $("<div>").addClass("col-10" + textAreaTime);
     var textArea = $("<textarea>").attr("name", time);
     textSpace.append(textArea);
 
@@ -23,9 +23,32 @@ var createTimeBlock = function(time){
     
 }
 
-var createGrid = function(){
-    
+var createTimeGrid = function(){
+    var time = 9;
+    var momentTime = 9;
+    var timeClass = " present";
+    for(var i = 0; i < 9; i++){
+        if(moment().hours() < momentTime){
+            timeClass = " future";
+        }else if(moment().hours() > momentTime){
+            timeClass = " past";
+        }else if(moment().hours() === momentTime){
+            timeClass = " present";
+        }
+        if (time > 12){
+            time = 1;
+            var timeString = time + "pm";
+            time++;
+            createTimeBlock(timeString, timeClass);
+        }
+        else {
+            var timeString = time + "am";
+            time++;
+            createTimeBlock(timeString, timeClass);
+        }
+        momentTime++;
+    }
 }
-var time = "9am";
+createTimeGrid();
 
-createTimeBlock(time);
+console.log(moment().hours());
