@@ -1,5 +1,9 @@
 console.log("cum");
 
+var setCurrentDay = function(){
+    $("#currentDay").text(moment().format("LLLL"));
+}
+
 var createTimeBlock = function(time, textAreaTime){
     var timeBlockEl = $("<div>").addClass("time-block");
     var row = $("<div>").addClass("row");
@@ -49,6 +53,9 @@ var createTimeGrid = function(){
         momentTime++;
     }
 }
+
+
+setCurrentDay();
 createTimeGrid();
 
 console.log(moment().hours());
