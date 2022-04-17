@@ -1,11 +1,12 @@
+//Object filled with the time blocks and their descriptions
 var timeBlocks = {
 };
 
-
+//sets the day
 var setCurrentDay = function(){
     $("#currentDay").text(moment().format("LLLL"));
 }
-
+//creates one individual time block, it needs an input for the time, if its in the past present or future and the description of the event
 var createTimeBlock = function(times, textAreaTime, description){
     var timeBlockEl = $("<div>").addClass("time-block");
     
@@ -36,7 +37,7 @@ var createTimeBlock = function(times, textAreaTime, description){
 
     $("#time-blocks").append(timeBlockEl);
 }
-
+//runs through and creates time blocks for 9am to 5pm
 var createTimeGrid = function(){
     var time = 8;
     var timeClass = " present";
@@ -53,7 +54,7 @@ var createTimeGrid = function(){
         createTimeBlock(time, timeClass, timeBlocks[time]);
     }
 }
-
+//grabs the saved blocks from local storage
 var getLocalData = function(){
     var local = localStorage.getItem("timeBlocks");
     var localParsed = JSON.parse(local);
@@ -63,18 +64,20 @@ var getLocalData = function(){
         }
     }
 }
-
+//saves a task whenever a save button is pressed
 var saveLocalData = function(time, value){
     timeBlocks[time] = value;
     localStorage.setItem("timeBlocks", JSON.stringify(timeBlocks));
 }
-
+//listener for the save button
 $("#time-blocks").on("click", "span", function(){
     var saveId = $(this).attr("id").replace("Save", "");
     
     var textArea = $("#" + saveId).val();
     saveLocalData(saveId, textArea);
 })
+
+//function calls
 getLocalData();
 setCurrentDay();
 createTimeGrid();
